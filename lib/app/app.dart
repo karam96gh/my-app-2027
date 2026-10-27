@@ -3,19 +3,24 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
 import '../core/clock/clock.dart';
+import '../data/local/local_fake_data_source.dart';
 import 'app_routes.dart';
 
 class MawidiApp extends StatelessWidget {
-  const MawidiApp({super.key, this.clock = const SystemClock()});
+  const MawidiApp({super.key, required this.clock, required this.dataSource});
 
   final Clock clock;
+  final LocalFakeDataSource dataSource;
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'موعدي',
       debugShowCheckedModeBanner: false,
-      initialBinding: BindingsBuilder(() => Get.put<Clock>(clock)),
+      initialBinding: BindingsBuilder(() {
+        Get.put<Clock>(clock);
+        Get.put<LocalFakeDataSource>(dataSource);
+      }),
       locale: const Locale('ar'),
       supportedLocales: const [Locale('ar')],
       localizationsDelegates: const [
